@@ -1,7 +1,313 @@
 <!DOCTYPE html>
-<html>
-  <body>
-    <h1>Hello World</h1>
-    <p>I'm AstroFusion</p>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AstroFusion Projects Showcase</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #181c20;
+      color: #f3f3f3;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #23272f;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+    }
+    .repo-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+    /* --- Modern Card Design for Curated Projects --- */
+    .repo-card.modern {
+      background: #23272f;
+      border-radius: 18px;
+      padding: 0;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid #2d323c;
+      min-height: 340px;
+    }
+    .repo-card.modern:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 8px 32px rgba(97,218,251,0.12);
+      border-color: #61dafb;
+    }
+    .repo-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background: #181c20;
+      display: block;
+      border-bottom: 1px solid #2d323c;
+      transition: filter 0.2s;
+    }
+    .repo-card.modern:hover .repo-img {
+      filter: brightness(1.08) saturate(1.2);
+    }
+    .repo-card-content {
+      padding: 1.2rem 1rem 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      justify-content: center;
+    }
+    .repo-title.modern {
+      font-size: 1.25rem;
+      color: #61dafb;
+      margin: 0.7rem 0 0 0;
+      text-decoration: none;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-align: center;
+      transition: color 0.2s;
+    }
+    .repo-card.modern:hover .repo-title.modern {
+      color: #fff;
+    }
+    @media (max-width: 600px) {
+      .repo-list {
+        padding: 1rem;
+        gap: 1rem;
+      }
+      .repo-card.modern {
+        min-height: 260px;
+      }
+      .repo-img {
+        height: 120px;
+      }
+    }
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+    .tab-btn {
+      background: #23272f;
+      color: #61dafb;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 8px 8px 0 0;
+      font-size: 1rem;
+      cursor: pointer;
+      outline: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .tab-btn.active, .tab-btn:hover {
+      background: #181c20;
+      color: #fff;
+    }
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.3s;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .repo-card.github {
+      background: #20232a;
+      border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.13);
+      border: 1px solid #292d36;
+      padding: 1.5rem 1.2rem 1.2rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      min-height: 200px;
+      transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+    }
+    .repo-card.github:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 6px 24px rgba(97,218,251,0.10);
+      border-color: #61dafb;
+    }
+    .repo-title.github {
+      font-size: 1.18rem;
+      color: #61dafb;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      text-decoration: none;
+      transition: color 0.2s;
+      word-break: break-all;
+    }
+    .repo-card.github:hover .repo-title.github {
+      color: #fff;
+    }
+    .repo-desc.github {
+      color: #b0b8c1;
+      font-size: 1rem;
+      margin-bottom: 1.1rem;
+      min-height: 2.2em;
+      text-align: left;
+    }
+    .repo-info.github {
+      display: flex;
+      gap: 1.2rem;
+      font-size: 0.98rem;
+      color: #8ab4f8;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .repo-info.github span {
+      display: flex;
+      align-items: center;
+      gap: 0.3em;
+    }
+    .repo-info.github .forked {
+      color: #ffb347;
+      font-size: 0.97rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Astro-Fusion.com Projects</h1>
+    <p>Showcasing my public GitHub repositories</p>
+  </header>
+  <main>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="static">Curated Projects</button>
+      <button class="tab-btn" data-tab="public">Public GitHub Repos</button>
+      <button class="tab-btn" data-tab="all">All GitHub Repos</button>
+    </div>
+    <div id="tab-static" class="tab-content active">
+      <div class="repo-list" id="static-repos"></div>
+    </div>
+    <div id="tab-public" class="tab-content">
+      <div class="repo-list" id="public-repos"></div>
+    </div>
+    <div id="tab-all" class="tab-content">
+      <div class="repo-list" id="all-repos"></div>
+    </div>
+  </main>
+  <script>
+    // --- Tab logic ---
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('tab-' + this.dataset.tab).classList.add('active');
+      });
+    });
+
+    // --- Static curated repos with images ---
+    const staticRepos = [
+      {
+        name: "MDX-Generator",
+        desc: "Blog generator and files parsing tools using GenAI for topic wise file generator.",
+        url: "https://github.com/astro-fusion/MDX-Generator",
+        img: "img/mdx-generator.jpg"
+      },
+      {
+        name: "astro-blogs",
+        desc: "A comprehensive resource for Vedic astrology covering Rasi, Houses, Planets, Dasha Systems, Nakshatras, and more.",
+        url: "https://github.com/astro-fusion/astro-blogs",
+        img: "img/astro-blogs.jpg"
+      },
+      {
+        name: "The-Cosmic-Counselor",
+        desc: "The-Cosmic-Counselor eBook",
+        url: "https://github.com/astro-fusion/The-Cosmic-Counselor",
+        img: "img/the-cosmic-counselor.jpg"
+      },
+      {
+        name: "Astrology_Planetary_Data",
+        desc: "Vedic Astrology Data from 16th Century to 21st Century",
+        url: "https://github.com/astro-fusion/Astrology_Planetary_Data",
+        img: "img/astrology-planetary-data.jpg"
+      }
+    ];
+
+    function renderStaticRepos() {
+      const container = document.getElementById('static-repos');
+      container.innerHTML = '';
+      staticRepos.forEach(repo => {
+        const card = document.createElement('div');
+        card.className = 'repo-card modern';
+        card.innerHTML = `
+          <a href="${repo.url}" target="_blank" tabindex="-1">
+            <img class="repo-img" src="${repo.img}" alt="${repo.name} logo">
+          </a>
+          <div class="repo-card-content">
+            <a class="repo-title modern" href="${repo.url}" target="_blank">${repo.name}</a>
+            <div class="repo-desc" style="margin-top:0.7rem; color:#b0b8c1; font-size:1rem; text-align:center;">
+              ${repo.desc}
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // --- GitHub API repos ---
+    async function fetchAndRenderRepos() {
+      // Fetch repos
+      const response = await fetch('https://api.github.com/users/astro-fusion/repos?sort=updated');
+      const repos = await response.json();
+
+      // Public (not forked)
+      const publicContainer = document.getElementById('public-repos');
+      publicContainer.innerHTML = '';
+      repos.filter(repo => !repo.fork).forEach(repo => {
+        const card = document.createElement('div');
+        card.className = 'repo-card github';
+        card.innerHTML = `
+          <a class="repo-title github" href="${repo.html_url}" target="_blank">${repo.name}</a>
+          <div class="repo-desc github">${repo.description ? repo.description : 'No description provided.'}</div>
+          <div class="repo-info github">
+            <span title="Stars">⭐ ${repo.stargazers_count}</span>
+            <span title="Forks">🍴 ${repo.forks_count}</span>
+            <span title="Last updated">🕒 ${new Date(repo.updated_at).toLocaleDateString()}</span>
+          </div>
+        `;
+        publicContainer.appendChild(card);
+      });
+
+      // All (including forks)
+      const allContainer = document.getElementById('all-repos');
+      allContainer.innerHTML = '';
+      repos.forEach(repo => {
+        const card = document.createElement('div');
+        card.className = 'repo-card github';
+        card.innerHTML = `
+          <a class="repo-title github" href="${repo.html_url}" target="_blank">${repo.name}</a>
+          <div class="repo-desc github">${repo.description ? repo.description : 'No description provided.'}</div>
+          <div class="repo-info github">
+            <span title="Stars">⭐ ${repo.stargazers_count}</span>
+            <span title="Forks">🍴 ${repo.forks_count}</span>
+            <span title="Last updated">🕒 ${new Date(repo.updated_at).toLocaleDateString()}</span>
+            ${repo.fork ? '<span class="forked" title="Forked Repo">Forked</span>' : ''}
+          </div>
+        `;
+        allContainer.appendChild(card);
+      });
+    }
+
+    renderStaticRepos();
+    fetchAndRenderRepos();
+  </script>
+</body>
 </html>
